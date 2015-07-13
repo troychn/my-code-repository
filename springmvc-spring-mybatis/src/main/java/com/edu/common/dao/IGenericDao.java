@@ -12,34 +12,35 @@ import java.util.List;
  * @since 0.1 
  * @param <T>    实体类 
  * @param <PK>   主键类，必须实现Serializable接口 
- *
+ *  
+ * @see com.edu.common.dao.impl.GenericDaoImpl
  */  
 public abstract interface IGenericDao<T extends BaseEntity, PK extends Serializable> {
     /** 
      * 插入一个实体（在数据库INSERT一条记录） 
      * @param entity 实体对象 
      */  
-    public abstract int insert(T entity) throws DaoException;  
+    public abstract int insert(T entity) throws DaoException;
     
     /** 
      * 按条件查询记录 
      * @param param 查询出来对象 
      * @return 符合条件记录的实体对象的List 
      */  
-    public Pages<T> selectFetchObjects(Object param) throws DaoException;  
+    public Pages<T> selectFetchObjects(Object param) throws DaoException;
       
     /** 
      * 查询整表总记录数 
      * @return 整表总记录数 
      */  
-    public int countFetchObjects(Object param) throws DaoException;  
+    public int countFetchObjects(Object param) throws DaoException;
     	
     /** 
      * 修改一个实体对象（UPDATE一条记录） 
      * @param entity 实体对象 
      * @return 修改的对象个数，正常情况=1 
      */  
-    public abstract int update(T entity) throws DaoException;  
+    public abstract int update(T entity) throws DaoException;
       
     /** 
      * 修改符合条件的记录 
@@ -55,7 +56,7 @@ public abstract interface IGenericDao<T extends BaseEntity, PK extends Serializa
      * @param primaryKey 主键对象 
      * @return 删除的对象个数，正常情况=1 
      */  
-    public abstract int delete(PK primaryKey) throws DaoException;  
+    public abstract int delete(PK primaryKey) throws DaoException;
   
       
     /** 
@@ -69,14 +70,14 @@ public abstract interface IGenericDao<T extends BaseEntity, PK extends Serializa
      * 查询整表总记录数 
      * @return 整表总记录数 
      */  
-    public abstract int count() throws DaoException;  
+    public abstract int count() throws DaoException;
       
     /** 
      * 查询符合条件的记录数 
      * @param params 查询条件参数，包括WHERE条件（其他参数内容不起作用）。此参数设置为null，则相当于count()
      * @return 
      */  
-    public abstract int count(Object params) throws DaoException;  
+    public abstract int count(Object params) throws DaoException;
   
     /** 
      * 按主键取记录 
@@ -89,7 +90,7 @@ public abstract interface IGenericDao<T extends BaseEntity, PK extends Serializa
      * 取全部记录 
      * @return 全部记录实体对象的List 
      */  
-    public abstract List<T> select() throws DaoException;  
+    public abstract List<T> select() throws DaoException;
       
     /** 
      * 按条件查询记录 
@@ -103,7 +104,7 @@ public abstract interface IGenericDao<T extends BaseEntity, PK extends Serializa
      * @param params 查询条件参数，包括WHERE条件、分页条件、排序条件
      * @return PaginationResult对象，包括（符合条件的）总记录数、页实体对象List等 
      */  
-    public abstract Pages<T> selectPagination(Object params) throws DaoException;  
+    public abstract Pages<T> selectPagination(Object params) throws DaoException;
       
     /** 
      * 按条件查询记录，并把有外键关联的字段的关联对象也处理出来 
@@ -111,7 +112,7 @@ public abstract interface IGenericDao<T extends BaseEntity, PK extends Serializa
      * @param params 查询条件参数，包括WHERE条件、分页条件、排序条件<strong>（不包括外键关联表条件）</strong>
      * @return 符合条件记录的实体对象的List 
      */  
-    public abstract List<T> selectFk(Object params) throws DaoException;  
+    public abstract List<T> selectFk(Object params) throws DaoException;
       
     /** 
      * 按条件查询记录，并把有外键关联的字段的关联对象也处理出来，并处理成分页结果 
@@ -133,17 +134,17 @@ public abstract interface IGenericDao<T extends BaseEntity, PK extends Serializa
      * 批量插入 
      * @param list 
      */  
-    public abstract void batchInsert(final List<T> list) throws DaoException;  
+    public abstract void batchInsert(final List<T> list) throws DaoException;
       
     /** 
      * 批量修改 
      * @param list 
      */  
-    public abstract void batchUpdate(final List<T> list) throws DaoException;  
+    public abstract void batchUpdate(final List<T> list) throws DaoException;
       
     /** 
      * 批量删除 
      * @param list 
      */  
-    public abstract void batchDelete(final List<PK> list) throws DaoException;  
+    public abstract void batchDelete(final List<PK> list) throws DaoException;
 } 
