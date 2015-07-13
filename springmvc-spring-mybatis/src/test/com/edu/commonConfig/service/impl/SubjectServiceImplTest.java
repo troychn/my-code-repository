@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.commonConfig.service.impl;
+package com.edu.commonConfig.service.impl;
 
 import com.edu.commonConfig.bean.Subject;
 import com.edu.commonConfig.service.ISubjectService;

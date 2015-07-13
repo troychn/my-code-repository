@@ -37,7 +37,7 @@ public abstract interface IBaseDao<T extends BaseEntity, PK extends Serializable
 	 * @param entity 实体对象
 	 * @return 修改的对象个数，正常情况=1
 	 */
-	public abstract int update(T entity) throws DaoException;
+	public abstract int updateByPrimaryKey(T entity) throws DaoException;
 
 	/**
 	 * 修改符合条件的记录
@@ -47,7 +47,7 @@ public abstract interface IBaseDao<T extends BaseEntity, PK extends Serializable
 	 * @param entity 用于产生SQL的参数值，包括WHERE条件、目标字段和新值等
 	 * @return 修改的记录个数，用于判断修改是否成功
 	 */
-	public abstract int updateByParams(T entity) throws DaoException;
+	public abstract int updateBySelective(T entity) throws DaoException;
 
 	/**
 	 * 按主键删除记录
@@ -55,7 +55,7 @@ public abstract interface IBaseDao<T extends BaseEntity, PK extends Serializable
 	 * @param primaryKey 主键对象
 	 * @return 删除的对象个数，正常情况=1
 	 */
-	public abstract int delete(PK primaryKey) throws DaoException;
+	public abstract int deleteByPrimaryKey(PK primaryKey) throws DaoException;
 
 
 	/**
@@ -64,7 +64,7 @@ public abstract interface IBaseDao<T extends BaseEntity, PK extends Serializable
 	 *
 	 * @return
 	 */
-	public abstract int truncate(PK primaryKey) throws DaoException;
+	public abstract int truncateDeleteByPrimaryKey(PK primaryKey) throws DaoException;
 
 	/**
 	 * 查询整表总记录数

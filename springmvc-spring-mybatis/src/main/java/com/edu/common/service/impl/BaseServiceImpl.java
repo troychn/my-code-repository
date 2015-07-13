@@ -48,8 +48,8 @@ public abstract class BaseServiceImpl<T extends BaseEntity,PK extends Serializab
      * @param entity 实体对象 
      * @return 修改的对象个数，正常情况=1 
      */  
-    public int update(T entity) throws Exception {
-    	return dao.update(entity);
+    public int updateByPrimaryKey(T entity) throws Exception {
+    	return dao.updateByPrimaryKey(entity);
     }
       
     /** 
@@ -59,8 +59,8 @@ public abstract class BaseServiceImpl<T extends BaseEntity,PK extends Serializab
      * @param entity 用于产生SQL的参数值，包括WHERE条件、目标字段和新值等
      * @return 修改的记录个数，用于判断修改是否成功 
      */  
-    public int updateByParams(T entity) throws Exception {
-    	return dao.updateByParams(entity);
+    public int updateBySelective(T entity) throws Exception {
+    	return dao.updateBySelective(entity);
     }
       
     /** 
@@ -68,8 +68,8 @@ public abstract class BaseServiceImpl<T extends BaseEntity,PK extends Serializab
      * @param primaryKey 主键对象 
      * @return 删除的对象个数，正常情况=1 
      */  
-    public int delete(PK primaryKey) throws Exception {
-    	return dao.delete(primaryKey);
+    public int deleteByPrimaryKey(PK primaryKey) throws Exception {
+    	return dao.deleteByPrimaryKey(primaryKey);
     }
   
       
@@ -78,8 +78,8 @@ public abstract class BaseServiceImpl<T extends BaseEntity,PK extends Serializab
      * <p><strong>此方法一定要慎用！</strong></p> 
      * @return 
      */  
-    public int truncate(PK primaryKey) throws Exception {
-    	return dao.truncate(primaryKey);
+    public int truncateDeleteByPrimaryKey(PK primaryKey) throws Exception {
+    	return dao.truncateDeleteByPrimaryKey(primaryKey);
     }
       
     /** 

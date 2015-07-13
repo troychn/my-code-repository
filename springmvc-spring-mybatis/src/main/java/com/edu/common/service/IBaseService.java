@@ -22,7 +22,7 @@ public interface IBaseService<T extends BaseEntity,PK extends Serializable> {
      * @param entity 实体对象 
      * @return 修改的对象个数，正常情况=1 
      */  
-    public int update(T entity) throws Exception;  
+    public int updateByPrimaryKey(T entity) throws Exception;
       
     /** 
      * 修改符合条件的记录 
@@ -31,14 +31,14 @@ public interface IBaseService<T extends BaseEntity,PK extends Serializable> {
      * @param entity 用于产生SQL的参数值，包括WHERE条件、目标字段和新值等
      * @return 修改的记录个数，用于判断修改是否成功 
      */  
-    public int updateByParams(T entity) throws Exception;
+    public int updateBySelective(T entity) throws Exception;
       
     /** 
      * 按主键删除记录 
      * @param primaryKey 主键对象 
      * @return 删除的对象个数，正常情况=1 
      */  
-    public int delete(PK primaryKey) throws Exception;  
+    public int deleteByPrimaryKey(PK primaryKey) throws Exception;
   
       
     /** 
@@ -46,7 +46,7 @@ public interface IBaseService<T extends BaseEntity,PK extends Serializable> {
      * <p><strong>此方法一定要慎用！</strong></p> 
      * @return 
      */  
-    public int truncate(PK primaryKey) throws Exception;
+    public int truncateDeleteByPrimaryKey(PK primaryKey) throws Exception;
       
     /** 
      * 查询整表总记录数 

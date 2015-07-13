@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu.commonConfig.dao.GradestageDao">
+
+    <!-- 统一提取字段 -->
+    <sql id="gradestage_columns">
+        ID,gName,description,isEnable,parentId,createDate,updateDate,version
+    </sql>
+    <resultMap type="com.edu.commonConfig.bean.Gradestage" id="gradestageResultMap">
+        <id property="ID" column="ID"/>
+        <result property="gName" column="gName"/>
+        <result property="isEnable" column="isEnable"/>
+        <association property="gradestageParent" column="parentId" select="selectByPrimaryKey"/>
+    </resultMap>
+
+    <resultMap type="com.edu.commonConfig.bean.Gradestage" id="gradestageAllMap">
+        <id property="ID" column="ID"/>
+        <result property="gName" column="gName"/>
+        <!-- 查询父模块 -->
+        <association property="gradestageParent" column="parentId" select="findAllById"/>
+        <!-- 查询子模块 -->
+        <collection property="childrenGradestages" column="ID" select="getChildren"/>
+    </resultMap>
+
+    <!-- 保存 -->
+    <insert id="insert" parameterType="com.edu.commonConfig.bean.Gradestage">
+        insert into ep_gradestage_info (gName,description,isEnable,parentId,createDate,updateDate,version,isDelete)
+        VALUES (#{gName},#{description},#{isEnable},#{parentId},#{createDate},#{updateDate},#{version},0 )
+    </insert>
+
+    <!-- 根据id修改 -->
+    <update id="updateByPrimaryKey" parameterType="com.edu.commonConfig.bean.Gradestage">
+        update ep_gradestage_info set gName = #{gName},description = #{description},
+        isEnable = #{isEnable},parentId = #{parentId},createDate = #{createDate},
+        updateDate = #{updateDate},version = #{version} where ID = #{ID}
+    </update>
+
+    <!-- 根据id删除 -->
+    <update id="deleteByPrimaryKey" parameterType="int">
+        update ep_gradestage_info set isDelete = 1 WHERE ID = #{ID}
+    </update>
+
+    <delete id="truncateDeleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+          定义物理删除
+        -->
+        delete from ep_gradestage_info
+        where ID = #{ID,jdbcType=INTEGER}
+    </delete>
+
+    <!-- 动态sql：更新 -->
+    <update id="updateByCondition" parameterType="com.edu.commonConfig.bean.Gradestage">
+        update ep_gradestage_info
+        <set>
+            <if test="gName != null">
+                gName = #{gName},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="isEnable != null">
+                isEnable = #{isEnable},
+            </if>
+            <if test="parentId != null">
+                parentId = #{parentId},
+            </if>
+            <if test="createDate != null">
+                createDate = #{createDate},
+            </if>
+            <if test="updateDate != null">
+                updateDate = #{updateDate},
+            </if>
+            <if test="version != null">
+                version = #{version},
+            </if>
+        </set>
+        where ID = #{ID}
+    </update>
+
+    <!-- 根据ID查找学段 -->
+    <select id="selectByPrimaryKey" resultType="com.edu.commonConfig.bean.Gradestage" parameterType="int">
+        select
+        <include refid="gradestage_columns"/> from ep_gradestage_info where ID = #{ID}
+    </select>
+
+    <!-- 根据父ID查找学段父级 -->
+    <select id="findParentById" resultType="com.edu.commonConfig.bean.Gradestage">
+        select
+        <include refid="gradestage_columns"/>from ep_gradestage_info where 1=1
+        <if test="pId != null">
+           AND parentId = #{pId}
+        </if>
+        <if test="myId != null">
+            AND ID != #{myId}
+        </if>
+        AND isEnable = 1
+        AND isDelete = 0
+    </select>
+
+    <!-- 分页显示 根据动态条件，组合查询  -resultType="com.edu.siteCommonConfig.bean.Gradestage"> -->
+    <select id="selectByCondition" resultMap="gradestageResultMap">
+        select <include refid="gradestage_columns"/>
+        from ep_gradestage_info where 1 = 1
+        <if test="ID != null">
+            and ID = #{ID}
+        </if>
+        <if test="gName != null">
+            and gName like '%${gName}%'
+        </if>
+        <if test="description != null">
+            and description like '%${description}%'
+        </if>
+        <if test="parentID != null">
+            and parentId = #{parentId}
+        </if>
+        <if test="isEnable != null">
+            and isEnable = #{isEnable}
+        </if>
+        <if test="createDate != null">
+            and createDate like '%${createDate}%'
+        </if>
+        <if test="updateDate != null">
+            and updateDate like '%${updateDate}%'
+        </if>
+        AND isDelete = 0
+        ORDER BY updateDate DESC
+        limit #{startIndex}, #{pageSize}
+    </select>
+
+    <select id="listCount" resultType="int">
+        select count(*) from ep_gradestage_info
+        where 1 = 1
+        <if test="ID != null">
+            and ID = #{ID}
+        </if>
+        <if test="gName != null">
+            and gName like '%${gName}%'
+        </if>
+        <if test="description != null">
+            and description like '%${description}%'
+        </if>
+        <if test="parentId != null">
+            and parentId = #{parentId}
+        </if>
+        <if test="isEnable != null">
+            and isEnable = #{isEnable}
+        </if>
+        <if test="createDate != null">
+            and createDate like '%${createDate}%'
+        </if>
+        <if test="updateDate != null">
+            and updateDate like '%${updateDate}%'
+        </if>
+        AND isDelete = 0
+    </select>
+
+    <select id="isNameExists" resultType="int">
+        select count(*) from ep_gradestage_info
+        <where>
+            <if test="ID != null">
+                and ID != #{ID}
+            </if>
+            <if test="gName != null">
+                and gName = #{gName}
+            </if>
+            <if test="parentId != null">
+                and parentId = #{parentId}
+            </if>
+            AND isDelete = 0
+        </where>
+    </select>
+
+    <select id="selectAll" resultMap="gradestageAllMap">
+        <!--
+          查询所有数据，不包括分页
+        -->
+        select ID,gName
+        from ep_gradestage_info
+        WHERE isEnable = 1 AND isDelete = 0
+    </select>
+
+    <select id="findAllById" resultType="com.edu.commonConfig.bean.Gradestage" parameterType="int">
+        select ID,gName
+        from ep_gradestage_info
+        where isEnable = 1 AND isDelete = 0 AND ID = #{ID}
+    </select>
+
+    <select id="getChildren" parameterType="int" resultMap="gradestageAllMap">
+        select ID,gName
+        from ep_gradestage_info
+        WHERE isEnable = 1 AND isDelete = 0 AND parentId = #{ID}
+    </select>
+</mapper>

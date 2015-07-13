@@ -1,4 +1,4 @@
-package edu.commonConfig.service.impl;
+package com.edu.commonConfig.service.impl;
 
 import org.junit.runners.model.InitializationError;
 import org.springframework.test.context.TestContextManager;
