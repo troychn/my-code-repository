@@ -115,7 +115,7 @@ public class SubjectAction extends BaseAction {
     @RequestMapping("/delete/{id}")
     public Integer delete(@PathVariable("id") Integer id) {
         try {
-            return subjectService.delete(id);
+            return subjectService.deleteByPrimaryKey(id);
         } catch (Exception e) {
             logger.error("----------删除学科失败----------------" + e);
             e.printStackTrace();
@@ -151,7 +151,7 @@ public class SubjectAction extends BaseAction {
         try {
             subject.setModified(DateUtils.getCurrentTime());
             subject.setVersion(subject.getVersion() + 1);
-            return subjectService.update(subject);
+            return subjectService.updateByPrimaryKey(subject);
         } catch (Exception e) {
             e.printStackTrace();
         }
