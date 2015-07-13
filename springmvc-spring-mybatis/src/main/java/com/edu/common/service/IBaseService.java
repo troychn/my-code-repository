@@ -63,7 +63,7 @@ public interface IBaseService<T extends BaseEntity,PK extends Serializable> {
     
     /** 
      * 查询符合条件的记录数 
-     * @param param 查询条件参数，包括WHERE条件（其他参数内容不起作用）。此参数设置为null，则相当于count() 
+     * @param params 查询条件参数，包括WHERE条件（其他参数内容不起作用）。此参数设置为null，则相当于count()
      * @return 
      */  
     public int countFetchObjects(Object params) throws Exception;  
@@ -118,13 +118,4 @@ public interface IBaseService<T extends BaseEntity,PK extends Serializable> {
      */  
     public Pages<T> selectFkPagination(Map<String, Object> param) throws Exception;
 
-    /**
-     * 查询符合条件的名称是否存在
-     *
-     * @param params 条件
-     * @return 大于0表示名称存在，否则不存在
-     * @throws Exception
-     */
-    public abstract int isNameExists(Map<String, Object> params) throws Exception;
-    
 }

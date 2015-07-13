@@ -2,7 +2,7 @@ package com.edu.common.service.impl;
 
 import com.edu.common.Pages;
 import com.edu.common.bean.BaseEntity;
-import com.edu.common.dao.IGenericDao;
+import com.edu.common.dao.IBaseDao;
 import com.edu.common.service.IBaseService;
 
 import javax.annotation.Resource;
@@ -18,7 +18,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity,PK extends Serializab
 						implements IBaseService<T,PK> {
 
 
-    protected IGenericDao<T,PK> dao ;
+    protected IBaseDao<T,PK> dao ;
     
     /** 
      * 按条件查询记录 
@@ -31,7 +31,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity,PK extends Serializab
 
     //注入dao
     @Resource
-    public void setDao(IGenericDao<T, PK> dao) {
+    public void setDao(IBaseDao<T, PK> dao) {
         this.dao = dao;
     }
 
@@ -185,13 +185,4 @@ public abstract class BaseServiceImpl<T extends BaseEntity,PK extends Serializab
         return pages;
     }
 
-    /**
-     * 查询符合条件的名称是否存在
-     * @param params 条件
-     * @return 大于0表示名称存在，否则不存在
-     * @throws Exception
-     */
-    public int isNameExists(Map<String, Object> params) throws Exception {
-        return dao.isNameExists(params);
-    }
 }
